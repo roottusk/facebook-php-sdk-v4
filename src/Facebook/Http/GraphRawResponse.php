@@ -105,6 +105,13 @@ class GraphRawResponse
     public function setHttpResponseCodeFromHeader($rawResponseHeader)
     {
         preg_match('|HTTP/\d\.\d\s+(\d+)\s+.*|', $rawResponseHeader, $match);
+        
+        if (isset($match[1])) {
+            $this->httpResponseCode = (int)$match[1];
+        }
+
+        preg_match('|HTTP/\d\s+(\d+)\s+.*|', $rawResponseHeader, $match);
+        
         $this->httpResponseCode = (int)$match[1];
     }
 
