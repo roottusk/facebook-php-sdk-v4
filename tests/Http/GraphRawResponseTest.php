@@ -47,6 +47,24 @@ HEADER;
         'X-FB-Debug' => '02QQiffE7JG2rV6i/Agzd0gI2/OOQ2lk5UW0=',
         'Access-Control-Allow-Origin' => '*',
     ];
+    
+    protected $fakeRawHeaderVersion2 = <<<HEADER
+HTTP/2 200 OK
+Etag: "9d86b21aa74d74e574bbb35ba13524a52deb96e5"
+Content-Type: text/javascript; charset=UTF-8
+X-FB-Rev: 9244769
+Date: Mon, 5 December 2022 18:37:17 GMT
+X-FB-Debug: 02QQiffE7JG2rV6i/Agzd0gI2/OOQ2lk5UW0=
+Access-Control-Allow-Origin: *\r\n\r\n
+HEADER;
+    protected $fakeHeadersAsArrayVersion2 = [
+        'Etag' => '"9d86b21aa74d74e574bbb35ba13524a52deb96e5"',
+        'Content-Type' => 'text/javascript; charset=UTF-8',
+        'X-FB-Rev' => '9244769',
+        'Date' => 'Mon, 5 December 2022 18:37:17 GMT',
+        'X-FB-Debug' => '02QQiffE7JG2rV6i/Agzd0gI2/OOQ2lk5UW0=',
+        'Access-Control-Allow-Origin' => '*',
+    ];
 
     public function testCanSetTheHeadersFromAnArray()
     {
@@ -77,6 +95,16 @@ HEADER;
         $httpResponseCode = $response->getHttpResponseCode();
 
         $this->assertEquals($this->fakeHeadersAsArray, $headers);
+        $this->assertEquals(200, $httpResponseCode);
+    }
+    
+    public function testCanSetTheHeadersFromAStringWithVersionTwo()
+    {
+        $response = new GraphRawResponse($this->$fakeRawHeaderVersion2, '');
+        $headers = $response->getHeaders();
+        $httpResponseCode = $response->getHttpResponseCode();
+
+        $this->assertEquals($this->fakeHeadersAsArrayVersion2, $headers);
         $this->assertEquals(200, $httpResponseCode);
     }
 }
