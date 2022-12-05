@@ -100,7 +100,7 @@ HEADER;
     
     public function testCanSetTheHeadersFromAStringWithVersionTwo()
     {
-        $response = new GraphRawResponse($this->$fakeRawHeaderVersion2, '');
+        $response = new GraphRawResponse($this->fakeRawHeaderVersion2, '');
         $headers = $response->getHeaders();
         $httpResponseCode = $response->getHttpResponseCode();
 
